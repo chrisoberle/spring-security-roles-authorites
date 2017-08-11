@@ -55,7 +55,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/login*", "/logout*", "/protectedbynothing*").permitAll()
                 .antMatchers("/protectedbyauthority").hasAuthority("READ_PRIVILEGE")
-                .antMatchers("/protectedbyrole").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/protectedbyrole").hasRole("ADMIN")
                 .and()
             .formLogin()
                 .loginPage("/login")
