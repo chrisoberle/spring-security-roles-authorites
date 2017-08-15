@@ -1,5 +1,6 @@
 package org.baeldung.spring;
 
+import org.baeldung.persistence.dao.UserRepository;
 import org.baeldung.security.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,9 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 @ComponentScan(basePackages = { "org.baeldung.security" })
 @EnableWebSecurity
 public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Autowired
+	private UserRepository userRepository;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -54,8 +58,8 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/login*", "/logout*", "/protectedbynothing*").permitAll()
+                .antMatchers("/protectedbyrole").hasRole("BASIC")
                 .antMatchers("/protectedbyauthority").hasAuthority("READ_PRIVILEGE")
-                .antMatchers("/protectedbyrole").hasRole("ADMIN")
                 .and()
             .formLogin()
                 .loginPage("/login")
@@ -75,8 +79,8 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public DaoAuthenticationProvider authProvider() {
-        final CustomAuthenticationProvider authProvider = new CustomAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
+        final CustomAuthenticationProvider authProvider 
+        	= new CustomAuthenticationProvider(userRepository, userDetailsService);
         authProvider.setPasswordEncoder(encoder());
         return authProvider;
     }

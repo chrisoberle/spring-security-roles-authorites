@@ -2,18 +2,24 @@ package org.baeldung.security;
 
 import org.baeldung.persistence.dao.UserRepository;
 import org.baeldung.persistence.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-//@Component
 public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    @SuppressWarnings("unused")
+	private UserDetailsService userDetailsService;
+
+    public CustomAuthenticationProvider(UserRepository userRepository, UserDetailsService userDetailsService){
+    	super();
+    	this.setUserDetailsService(userDetailsService);
+    	this.userRepository = userRepository;
+    }
 
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {

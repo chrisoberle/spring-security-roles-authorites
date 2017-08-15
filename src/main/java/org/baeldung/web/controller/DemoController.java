@@ -12,19 +12,16 @@ public class DemoController {
 
     @RequestMapping(value = "/protectedbyauthority", method = RequestMethod.GET)
     public String protectedByAuthority(final Locale locale, final Model model) {
-        //model.addAttribute("users", userService.getUsersFromSessionRegistry());
         return "protectedbyauthority";
     }
 
     @RequestMapping(value = "/protectedbyrole", method = RequestMethod.GET)
     public String protectedByRole(final Locale locale, final Model model) {
-        //model.addAttribute("users", userService.getUsersFromSessionRegistry());
         return "protectedbyrole";
     }
 
     @RequestMapping(value = "/protectedbynothing", method = RequestMethod.GET)
     public String protectedByNothing(final Locale locale, final Model model) {
-        //model.addAttribute("users", userService.getUsersFromSessionRegistry());
         return "protectedbynothing";
     }
 }

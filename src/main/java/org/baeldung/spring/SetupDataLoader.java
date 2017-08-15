@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Lists;
+
 @Component
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -52,6 +54,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         final List<Privilege> userPrivileges = Arrays.asList(readPrivilege);
         createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
         createRoleIfNotFound("ROLE_USER", userPrivileges);
+        createRoleIfNotFound("ROLE_BASIC", Lists.newArrayList());
 
         final Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         final User user = new User();
@@ -63,7 +66,16 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         user.setEnabled(true);
         userRepository.save(user);
 
-        User savedUser = userRepository.findByEmail("test@test.com");
+        final Role basicRole = roleRepository.findByName("ROLE_BASIC");
+        final User basicUser = new User();
+        basicUser.setFirstName("Basic");
+        basicUser.setLastName("Basic");
+        basicUser.setEmail("basic@basic.com");
+        basicUser.setPassword(passwordEncoder.encode("basic"));
+        basicUser.setRoles(Arrays.asList(basicRole));
+        basicUser.setEnabled(true);
+        userRepository.save(basicUser);
+
         alreadySetup = true;
     }
 

@@ -56,11 +56,12 @@ public class MyUserDetailsService implements UserDetailsService {
         final List<Privilege> collection = new ArrayList<Privilege>();
         for (final Role role : roles) {
             collection.addAll(role.getPrivileges());
+            privileges.add(role.getName());
         }
         for (final Privilege item : collection) {
             privileges.add(item.getName());
         }
-        
+
         return privileges;
     }
 
