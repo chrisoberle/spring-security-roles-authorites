@@ -34,6 +34,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	public void addViewControllers(final ViewControllerRegistry registry) {
 		super.addViewControllers(registry);
 		registry.addViewController("/").setViewName("forward:/login");
+		registry.addViewController("/protectedbynothing");
+		registry.addViewController("/protectedbyrole");
+		registry.addViewController("/protectedbyauthority");
 		registry.addViewController("/login");
 		registry.addViewController("/logout.html");
 	}

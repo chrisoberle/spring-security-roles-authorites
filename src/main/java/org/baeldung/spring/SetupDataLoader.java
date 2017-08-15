@@ -51,27 +51,25 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         // == create initial roles
         final List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege);
-        final List<Privilege> userPrivileges = Arrays.asList(readPrivilege);
         createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-        createRoleIfNotFound("ROLE_USER", userPrivileges);
-        createRoleIfNotFound("ROLE_BASIC", Lists.newArrayList());
+        createRoleIfNotFound("ROLE_USER", Lists.newArrayList());
 
         final Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         final User user = new User();
-        user.setFirstName("Test");
-        user.setLastName("Test");
-        user.setEmail("test@test.com");
-        user.setPassword(passwordEncoder.encode("test"));
+        user.setFirstName("Admin");
+        user.setLastName("Admin");
+        user.setEmail("admin@test.com");
+        user.setPassword(passwordEncoder.encode("admin"));
         user.setRoles(Arrays.asList(adminRole));
         user.setEnabled(true);
         userRepository.save(user);
 
-        final Role basicRole = roleRepository.findByName("ROLE_BASIC");
+        final Role basicRole = roleRepository.findByName("ROLE_USER");
         final User basicUser = new User();
-        basicUser.setFirstName("Basic");
-        basicUser.setLastName("Basic");
-        basicUser.setEmail("basic@basic.com");
-        basicUser.setPassword(passwordEncoder.encode("basic"));
+        basicUser.setFirstName("User");
+        basicUser.setLastName("User");
+        basicUser.setEmail("user@test.com");
+        basicUser.setPassword(passwordEncoder.encode("user"));
         basicUser.setRoles(Arrays.asList(basicRole));
         basicUser.setEnabled(true);
         userRepository.save(basicUser);
