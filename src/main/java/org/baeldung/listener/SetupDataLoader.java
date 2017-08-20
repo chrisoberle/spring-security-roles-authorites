@@ -1,4 +1,4 @@
-package org.baeldung.spring;
+package org.baeldung.listener;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -58,7 +58,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/login*", "/logout*", "/protectedbynothing*").permitAll()
-                .antMatchers("/protectedbyrole").hasRole("BASIC")
+                .antMatchers("/protectedbyrole").hasRole("USER")
                 .antMatchers("/protectedbyauthority").hasAuthority("READ_PRIVILEGE")
                 .and()
             .formLogin()
